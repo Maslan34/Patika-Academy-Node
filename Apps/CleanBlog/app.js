@@ -2,13 +2,33 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const ejs = require('ejs');
+const mongoose = require('mongoose');
+const Blog = require('./models/Blog');
 
+
+// DB Connection
+mongoose
+  .connect('mongodb://localhost/cleanblog-test-db', {
+    //useNewUrlParser: true,
+    //useUnifiedTopology: true,
+  })
+  .then(() => console.log('MongoDB connected successfully'))
+  .catch((err) => console.log('MongoDB connection error:', err));
 const port = 3000;
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.set('view engine', 'ejs'); // BURASI ÖNCELİKLE VİEWS KLASÖRÜNE BAKAR.
+// Middlewares
 
-app.get('/', (req, res) => res.render('index'));
+app.use(express.static(path.join(__dirname, 'public'))); //Dosyaların public tarafından gözükebilmesi için
+app.set('view engine', 'ejs'); // BURASI ÖNCELİKLE VİEWS KLASÖRÜNE BAKAR.
+app.use(express.json());//Bu yazılmas ise şayet req.bodyden bilgileri alamayız
+app.use(express.urlencoded({ extended: true }));//Bu yazılmas ise şayet req.bodyden bilgileri alamayız
+// Middlewares
+
+app.get('/', async (req, res) => {
+  const blogs= await Blog.find();
+  //console.log(blogs.length);
+  res.render('index',{blogs})
+});
 app.get('/about', (req, res) => res.render('about'));
 app.get('/add', (req, res) => res.render('add_post'));
 
@@ -17,8 +37,10 @@ app.get('/test', (req, res) => {
   res.send(blog);
 });
 
-app.get('/test', (req, res) => {
-  res.send(blog);
+app.post('/sendBlog', (req, res) => {
+  //console.log(req.body);
+  Blog.create(req.body);
+  res.redirect("/");
 });
 
 app.listen(port, () => {
