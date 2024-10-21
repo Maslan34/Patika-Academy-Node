@@ -43,6 +43,11 @@ app.post('/sendBlog', (req, res) => {
   res.redirect("/");
 });
 
+app.get('/posts/:id', async (req, res) => {
+  const blog= await Blog.find({_id:req.params.id});
+  res.render("post",{blog});
+});
+
 app.listen(port, () => {
   console.log(`Sunucu  ${port}'da dinleniyor.`);
 });
