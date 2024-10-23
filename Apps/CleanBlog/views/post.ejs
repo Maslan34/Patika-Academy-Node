@@ -27,13 +27,34 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          
-          <h2 class="section-heading"><%= blog[0].title %></h2>
-          <p><%= blog[0].detail %></p>
+          <form method="post" action="/update/<%= blog[0]._id %>?_method=PUT">
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Post Title</label>
+              <input type="text" name="title" class="form-control" placeholder="Name"  value="<%= blog[0].title %>" required data-validation-required-message="Please enter your name.">
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Post Detail</label>
+              <textarea rows="5" name="detail" class="form-control" placeholder="Message"  id="message" required data-validation-required-message="Please enter a message."><%= blog[0].detail %></textarea>
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
 
           <a href="#">
             <img class="img-fluid" src="/img/post-sample-image.jpg" alt="">
           </a>
+
+         
+            <button type="submit" class="btn btn-success mt-4">Update Blog</button>
+          </form>
+          <form  method="post" action="/delete/<%= blog[0]._id %>?_method=DELETE" >
+            <button type="submit" class="btn btn-danger mt-4">Delete Blog</button>
+          </form>
+          
+       
         </div>
       </div>
     </div>
