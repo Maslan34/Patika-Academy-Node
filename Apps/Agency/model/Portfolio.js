@@ -26,7 +26,7 @@ const PortfolioSchema = new Schema({
     type: Date,
     default: Date.now  
   },
-  dateUptated: {
+  dateUpdated: {
     type: Date,
     default: Date.now  
   },
