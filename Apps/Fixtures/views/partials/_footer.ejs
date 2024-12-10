@@ -1,0 +1,123 @@
+   <!-- footer section start -->
+   <div class="footer_section layout_padding">
+    <div class="container">
+       <div class="footer_menu">
+          <ul>
+             <li class="active"><a href="index.html">HOME</a></li>
+             <li><a href="about.html">About</a></li>
+             <li><a href="furnitures.html">Furnitures</a></li>
+             <li><a href="blog.html">Blog</a></li>
+             <li><a href="testimonial.html">Testimonial</a></li>
+             <li><a href="contact.html">contact Us</a></li>
+          </ul>
+       </div>
+       <div class="social_icon">
+          <ul>
+             <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+             <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+             <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+             <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+          </ul>
+       </div>
+    </div>
+ </div>
+ <!-- footer section end -->
+ <!-- copyright section start -->
+ <div class="copyright_section">
+    <div class="container">
+       <p class="copyright_text">2020 All Rights Reserved. Design by <a href="https://html.design">Free Html Templates</a></p>
+    </div>
+ </div>
+ <!-- copyright section end -->
+
+ 
+ <!-- Javascript files-->
+ <script src="/js/jquery.min.js"></script>
+ <script src="/js/popper.min.js"></script>
+ <script src="/js/bootstrap.bundle.min.js"></script>
+ <script src="/js/jquery-3.0.0.min.js"></script>
+ <script src="/js/plugin.js"></script>
+ <!-- sidebar -->
+ <script src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
+ <script src="/js/custom.js"></script>
+ <!-- javascript --> 
+ <script src="/js/owl.carousel.js"></script>
+ <script>
+    $(document).ready(function() {
+    var owl = $('.gift_owl_carousel');
+    owl.owlCarousel({
+    items: 3,
+    loop: true,
+    margin: 10,
+    nav: true,
+    dots: false,
+    navText : ["<i class='fa fa-arrow-left'></i>","<i class='fa fa-arrow-right'></i>"],
+    autoplay: false,
+    autoplayTimeout: 3000,
+    autoplayHoverPause: true,
+    responsive: {
+    0: {
+       items: 1
+    },
+    769: {
+       items: 2,
+    },
+    992: {
+       items: 3
+    }
+    }
+    });   
+    });
+ </script>
+ 
+
+ <div class="modal fade bg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-lg " role="document">
+      <div class="modal-content bg-primary">
+         <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="updateModalLabel">Update Furniture</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body p-4">
+            <form method="POST" action="/furnitures/">
+               <div class="mb-4">
+                  <label for="furnitureName" class="form-label fw-bold">Furniture Name</label>
+                  <input 
+                     type="text" 
+                     class="form-control form-control-lg" 
+                     id="furnitureName" 
+                     name="name"  
+                     required >
+               </div>
+               <div class="mb-4">
+                  <label for="furnitureDescription" class="form-label fw-bold">Description</label>
+                  <textarea 
+                     class="form-control form-control-lg" 
+                     id="furnitureDescription" 
+                     name="description" 
+                     rows="4" 
+                     required></textarea>
+               </div>
+               <div class="mb-4">
+                  <label for="furnitureOrigin" class="form-label fw-bold">Origin</label>
+                  <input 
+                     type="text" 
+                     class="form-control form-control-lg" 
+                     id="furnitureOrigin" 
+                     name="origin" 
+                     required>
+               </div>
+               <div class="text-end">
+                  <button type="submit" class="btn btn-success btn-lg px-5">Save Changes</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+</body>
+
+
+
+</html>
+

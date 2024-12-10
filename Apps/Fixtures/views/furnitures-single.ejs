@@ -1,0 +1,116 @@
+<%- include('./partials/_header') %>
+   <body>
+
+
+      <%- include('./partials/_navbar') %>
+      <!-- furnitures section start -->
+      <div class="furnitures_section layout_padding">
+         <div class="container">
+            <div class="row">
+               <div class="col-sm-12">
+                  <h1 class="furnitures_taital"><%= furniture.name %></h1>
+                  <p class="furnitures_text"> <%= furniture.description %></p>
+               </div>
+            </div>
+            <div class="furnitures_section_2">
+               
+                   
+               
+               
+               <div class="row">
+                  
+                  <div class="col-md-4">
+                     <div class="hover01 column">
+                        <a href="/categories/"> 
+                     
+                        <figure><img src="/images/img-1.png"></figure></a>
+                        
+                     </div>
+                     <h3 class="introduction_text">Bedroom</h3>
+                 
+                  </div>
+                  <div class="col-md-8">
+                     <h1>Origin:<%= furniture.origin %></h1>
+
+                     <form method="POST" action="/furnitures/<%= furniture.id %>?_method=DELETE">
+
+                      <button type="submit">
+                              Delete
+                        </button>
+                     </form>
+                     
+                     
+                  
+               
+                    
+                     
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                     Update
+                   </button>
+                   
+                   <div class="modal fade bg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                     <div class="modal-dialog modal-lg " role="document">
+                        <div class="modal-content bg-primary">
+                           <div class="modal-header bg-primary text-white">
+                              <h5 class="modal-title" id="updateModalLabel">Update Furniture</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                           </div>
+                           <div class="modal-body p-4">
+                              <form method="POST" action="/furnitures/<%= furniture.id %>?_method=PUT">
+                                 <div class="mb-4">
+                                    <label for="furnitureName" class="form-label fw-bold">Furniture Name</label>
+                                    <input 
+                                       type="text" 
+                                       class="form-control form-control-lg" 
+                                       id="furnitureName" 
+                                       name="name" 
+                                       value="<%= furniture.name %>" 
+                                       required >
+                                 </div>
+                                 <div class="mb-4">
+                                    <label for="furnitureDescription" class="form-label fw-bold">Description</label>
+                                    <textarea 
+                                       class="form-control form-control-lg" 
+                                       id="furnitureDescription" 
+                                       name="description" 
+                                       rows="4" 
+                                       required><%= furniture.description %></textarea>
+                                 </div>
+                                 <div class="mb-4">
+                                    <label for="furnitureOrigin" class="form-label fw-bold">Origin</label>
+                                    <input 
+                                       type="text" 
+                                       class="form-control form-control-lg" 
+                                       id="furnitureOrigin" 
+                                       name="origin" 
+                                       value="<%= furniture.origin %>" 
+                                       required>
+                                 </div>
+                                 <div class="text-end">
+                                    <button type="submit" class="btn btn-success btn-lg px-5">Save Changes</button>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                 
+                  </div>
+                
+               
+               </div>
+
+
+               
+            </div>
+         </div>
+      </div>
+
+
+
+      
+      <!-- furnitures section end -->
+      <%- include('./partials/_footer') %>
+
+
