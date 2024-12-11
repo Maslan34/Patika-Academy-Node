@@ -5,9 +5,9 @@ const router = express.Router();
 
 router.route('/').post(furnitureController.addNewFurniture);
 router.route('/').get(furnitureController.getAllFurnitures);
-router.route('/:id').get(furnitureController.getFurniture);
-router.route('/:id').delete(furnitureController.deleteFurniture);
-router.route('/:id').put(furnitureController.updateFurniture);
+router.route('/:slug').get(furnitureController.getFurniture);
+router.route('/:slug').delete(furnitureController.deleteFurniture);
+router.route('/:slug').put(furnitureController.updateFurniture);
 
 
 

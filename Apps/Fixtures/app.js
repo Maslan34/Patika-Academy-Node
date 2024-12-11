@@ -2,6 +2,8 @@ const express = require('express')
 const path = require('path')
 const cors = require('cors');
 const mongoose = require('mongoose');
+const session = require('express-session') // Session oluşturma
+const MongoStore = require('connect-mongo'); // Oluşturulan Sessionu mongo db de saklama
 const app = express()
 const port = 3000
 
@@ -27,9 +29,16 @@ app.use(methodOverride('_method')); // Method Override
 
   const pageRouter = require('./routes/pageRoute');
   const furnitureRouter = require('./routes/furnitureRoute');
-  const categoriesRouter = require('./routes/categoriesRoute');
+  const categoriesRouter = require('./routes/categoryRoute');
+  const authRouter = require('./routes/authRoute');
 
 //Routes
+
+// Global Varibles
+
+global.gloabalUserSessionId = null;
+
+// Global Varibles
 
 
 // DB Connection
@@ -41,9 +50,25 @@ mongoose
 // DB Connection
 
 
+app.use(session({
+  secret: 'Sensei', // özel anahtar.
+  resave: false, // Herhangi bir değişikli olmasa bile kaydeder.
+  saveUninitialized: true,
+  //cookie: { secure: true } -> yeni versiyonda gerek yok
+  store: MongoStore.create({ mongoUrl: 'mongodb://localhost/fixtures' }) // Sessionu saklama
+}));
+
+app.use("*",(req, res, next) => {
+  
+  gloabalUserSessionId = req.session.userSessionId;
+  console.log('here:',gloabalUserSessionId);
+  next();
+});
+
 app.use("/",pageRouter)
 app.use("/furnitures",furnitureRouter)
 app.use("/categories",categoriesRouter)
+app.use("/users",authRouter)
 
 
 

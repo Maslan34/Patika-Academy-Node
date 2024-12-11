@@ -44,7 +44,11 @@
              <li><a href="blog.html">Blog</a></li>
              <li><a href="testimonial.html">Testimonial</a></li>
              <li><a href="/contact">Contact Us</a></li>
-             <li><a href="#">Login</a></li>
+             <% if(!gloabalUserSessionId){ %>
+             <li><a href="/login">Login</a></li>
+             <% }else{ %>
+               <li><a href="/users/logout">Logout</a></li>
+               <%}  %>
              <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
           </ul>
        </div>

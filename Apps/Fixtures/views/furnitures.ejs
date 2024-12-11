@@ -29,13 +29,13 @@
                   <% furnitures.forEach(element => { %>
                   <div class="col-md-4">
                      <div class="hover01 column">
-                        <a href="/furnitures/<%= element.id %>"> 
+                        <a href="/furnitures/<%= element.slug %>"> 
                      
                         <figure><img src="/images/img-1.png"></figure></a>
                         
                      </div>
                      <h3 class="introduction_text">Bedroom</h3>
-                     <div class="seemore_bt"><a href="/furnitures/<%= element.id %>">See More</a></div>
+                     <div class="seemore_bt"><a href="/furnitures/<%= element.slug %>">See More</a></div>
                   </div>
                   <%  });  %>
                

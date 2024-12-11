@@ -1,0 +1,39 @@
+<%- include('./partials/_header') %>
+<body>
+   <%- include('./partials/_navbar') %>
+
+   <!-- contact section start -->
+   <div class="contact_section layout_padding">
+      <div class="container">
+         <div class="row">
+            <div class="col-sm-12">
+               <h1 class="contact_taital contact_heading">Register</h1>
+            </div>
+         </div>
+         <div class="contact_section_2">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="mail_section map_form_container">
+                    <form action="/users" method="post">
+                        <input type="text" class="mail_text" placeholder="Name" name="name">
+                        <input type="email" class="mail_text" placeholder="Email" name="email">
+                        <input type="password" class="mail_text" placeholder="Password" name="password">
+
+                       
+                        <div class="btn_main form-inline d-flex justify-content-between">
+                         
+                               <button type="Submit" class="btn btn-warning mt-5">Register</button>
+                           </form>
+                        
+                        </div>
+                     
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- contact section end -->
+
+   <%- include('./partials/_footer') %>
+</body>

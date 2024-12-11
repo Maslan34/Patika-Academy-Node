@@ -22,7 +22,7 @@ const addNewFurniture = async (req, res) => {
 
 const getFurniture = async (req, res) => {
   try {
-    const furnitureFetched = await Furniture.findOne({ _id: req.params.id });
+    const furnitureFetched = await Furniture.findOne({ slug: req.params.slug });
     if (!furnitureFetched) {
       return res.status(404).json({ error: "Furniture not found" });
     }
@@ -34,7 +34,7 @@ const getFurniture = async (req, res) => {
 
 const deleteFurniture = async (req, res) => {
   try {
-    const deletedFurniture = await Furniture.findOneAndDelete({ _id: req.params.id });
+    const deletedFurniture = await Furniture.findOneAndDelete({slug: req.params.slug });
     if (!deletedFurniture) {
       return res.status(404).json({ error: "Furniture not found" });
     }
@@ -52,7 +52,7 @@ const updateFurniture = async (req, res) => {
 
     // Güncellenen veriyi bul ve güncelle
     const updatedFurniture = await Furniture.findOneAndUpdate(
-      { _id: req.params.id }, // Hangi dokümanın güncelleneceğini belirtir
+      { slug: req.params.slug }, // Hangi dokümanın güncelleneceğini belirtir
       { name, description, origin }, // Güncellenecek alanlar
       { new: true, } // Yeni güncellenmiş dokümanı döndür ve doğrulama çalıştır
     );
