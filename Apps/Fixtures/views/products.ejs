@@ -11,22 +11,16 @@
                   <h1 class="furnitures_taital">Our Furnitures Work</h1>
                   <p class="furnitures_text">reader will be distracted by the readable content of a page when looking at its layout. </p>
                   
-                   
+                  <% if(user){ %>
+
+                      <% if(user.role =="Seller"){ %>
+                        <button  type="button" class="btn btn-primary col-sm-12" data-toggle="modal" data-target="#exampleModal2">
+                           Add Product
+                         </button>
+                         <% } %>
+                         <% } %>
                    
                </div>
-
-               <% if(user){ %>
-               <% if(user.role =="Admin"){ %>
-               <button  type="button" class="btn btn-primary col-sm-12" data-toggle="modal" data-target="#exampleModal">
-                  Add Furniture
-                </button>
-                <% } %>
-                <% if(user.role =="Seller"){ %>
-                  <button  type="button" class="btn btn-primary col-sm-12" data-toggle="modal" data-target="#exampleModal2">
-                     Add Product
-                   </button>
-                   <% } %>
-                   <% } %>
             </div>
             
             <div class="furnitures_section_2">
@@ -36,16 +30,16 @@
                
                <div class="row">
                   
-                  <% furnitures.forEach(element => { %>
+                  <% products.forEach(element => { %>
                   <div class="col-md-4">
                      <div class="hover01 column">
-                        <a href="/furnitures/<%= element.slug %>"> 
+                        <a href="/products/<%= element.slug %>"> 
                      
                         <figure><img src="/images/img-1.png"></figure></a>
                         
                      </div>
                      <h3 class="introduction_text">Bedroom</h3>
-                     <div class="seemore_bt"><a href="/furnitures/<%= element.slug %>">See More</a></div>
+                     <div class="seemore_bt"><a href="/products/<%= element.slug %>">See More</a></div>
                   </div>
                   <%  });  %>
                
@@ -63,13 +57,13 @@
          <div class="modal-dialog modal-lg " role="document">
             <div class="modal-content bg-primary">
                <div class="modal-header bg-primary text-white">
-                  <h5 class="modal-title" id="updateModalLabel">Add Furniture</h5>
+                  <h5 class="modal-title" id="updateModalLabel">Add Products</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body p-4">
-                  <form method="POST" action="/furnitures/">
+                  <form method="POST" action="/products/">
                      <div class="mb-4">
-                        <label for="furnitureName" class="form-label fw-bold">Furniture Name</label>
+                        <label for="furnitureName" class="form-label fw-bold">Product Name</label>
                         <input 
                            type="text" 
                            class="form-control form-control-lg" 

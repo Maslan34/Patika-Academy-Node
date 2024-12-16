@@ -1,11 +1,18 @@
-const Furniture = require('../models/Furniture');
-
+const Furniture = require("../models/Furniture");
+const User = require("../models/User");
 const getAllFurnitures = async (req, res) => {
   try {
+    const user = await User.findById(gloabalUserSessionId);
     const getAllFurnitures = await Furniture.find();
-    res.render("furnitures", { furnitures: getAllFurnitures });
+    console.log(getAllFurnitures);
+    res.render("furnitures", { furnitures: getAllFurnitures, user: user });
   } catch (error) {
-    res.status(500).json({ error: "An error occurred while fetching furnitures", details: error.message });
+    res
+      .status(500)
+      .json({
+        error: "An error occurred while fetching furnitures",
+        details: error.message,
+      });
   }
 };
 
@@ -16,7 +23,12 @@ const addNewFurniture = async (req, res) => {
     //console.log(furniture)
     res.status(200).redirect("/");
   } catch (error) {
-    res.status(500).json({ error: "An error occurred while adding new furniture", details: error.message });
+    res
+      .status(500)
+      .json({
+        error: "An error occurred while adding new furniture",
+        details: error.message,
+      });
   }
 };
 
@@ -28,20 +40,32 @@ const getFurniture = async (req, res) => {
     }
     res.render("furnitures-single", { furniture: furnitureFetched });
   } catch (error) {
-    res.status(500).json({ error: "An error occurred while fetching the furniture", details: error.message });
+    res
+      .status(500)
+      .json({
+        error: "An error occurred while fetching the furniture",
+        details: error.message,
+      });
   }
 };
 
 const deleteFurniture = async (req, res) => {
   try {
-    const deletedFurniture = await Furniture.findOneAndDelete({slug: req.params.slug });
+    const deletedFurniture = await Furniture.findOneAndDelete({
+      slug: req.params.slug,
+    });
     if (!deletedFurniture) {
       return res.status(404).json({ error: "Furniture not found" });
     }
     console.log(deletedFurniture);
     res.status(200).redirect("/");
   } catch (error) {
-    res.status(500).json({ error: "An error occurred while deleting the furniture", details: error.message });
+    res
+      .status(500)
+      .json({
+        error: "An error occurred while deleting the furniture",
+        details: error.message,
+      });
   }
 };
 
@@ -54,7 +78,7 @@ const updateFurniture = async (req, res) => {
     const updatedFurniture = await Furniture.findOneAndUpdate(
       { slug: req.params.slug }, // Hangi dokümanın güncelleneceğini belirtir
       { name, description, origin }, // Güncellenecek alanlar
-      { new: true, } // Yeni güncellenmiş dokümanı döndür ve doğrulama çalıştır
+      { new: true } // Yeni güncellenmiş dokümanı döndür ve doğrulama çalıştır
     );
 
     // Eğer doküman bulunmazsa hata döndür
@@ -65,7 +89,12 @@ const updateFurniture = async (req, res) => {
     // Başarılı bir şekilde güncellenmiş dokümanı döndür
     res.status(200).redirect("/");
   } catch (error) {
-    res.status(500).json({ error: "An error occurred while updating the furniture", details: error.message });
+    res
+      .status(500)
+      .json({
+        error: "An error occurred while updating the furniture",
+        details: error.message,
+      });
   }
 };
 
@@ -74,5 +103,5 @@ module.exports = {
   getAllFurnitures,
   getFurniture,
   deleteFurniture,
-  updateFurniture
+  updateFurniture,
 };

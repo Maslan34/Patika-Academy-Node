@@ -13,5 +13,4 @@ router.route('/:slug').put(furnitureController.updateFurniture);
 
 
 
-
 module.exports = router;

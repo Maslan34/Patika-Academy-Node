@@ -9,6 +9,7 @@ const port = 3000
 
 require('dotenv').config();
 const googleApiKey = process.env.GOOGLE_MAPS_API_KEY;
+
 // CORS'u tüm rotalar için etkinleştir
 app.use(cors());
 app.set("view engine", "ejs"); // Ejs Engine Etkinleştirme
@@ -29,7 +30,7 @@ app.use(methodOverride('_method')); // Method Override
 
   const pageRouter = require('./routes/pageRoute');
   const furnitureRouter = require('./routes/furnitureRoute');
-  const categoriesRouter = require('./routes/categoryRoute');
+  const productRoute = require('./routes/productRoute');
   const authRouter = require('./routes/authRoute');
 
 //Routes
@@ -61,13 +62,13 @@ app.use(session({
 app.use("*",(req, res, next) => {
   
   gloabalUserSessionId = req.session.userSessionId;
-  console.log('here:',gloabalUserSessionId);
+  //console.log('Session Id:',gloabalUserSessionId);
   next();
 });
 
 app.use("/",pageRouter)
 app.use("/furnitures",furnitureRouter)
-app.use("/categories",categoriesRouter)
+app.use("/products",productRoute)
 app.use("/users",authRouter)
 
 

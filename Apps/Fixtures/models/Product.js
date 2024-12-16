@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Furniture = require('./Furniture');
+const slugify = require('slugify');
 
 const ProductSchema = new Schema({
   name: {
@@ -8,9 +9,9 @@ const ProductSchema = new Schema({
     required: true,
   },
   furnitureCount:Number,
-  furnitures:{
+  furniture:{
     type:mongoose.Schema.Types.ObjectId,
-    ref:'Furniture'
+    ref:'Furnitures'
   },
   height: String,
   width: String,
@@ -18,7 +19,23 @@ const ProductSchema = new Schema({
     type: String,
     required: true,
   },
+  slug:{
+    type: String,
+    unique: true,
+  }
 
+});
+
+
+ProductSchema.pre('save', function (next) {
+  //bu fonksiyon bir middleware yapısında db oluşturulmandan önce çağrılır ve slugfiy işlemi yapılır.
+  // ardından next methodu ile diğer middleware geçilirek db kayıt işlemi sonlandırılır.
+
+  this.slug = slugify(this.name, {
+    lower: true,
+    strict: true, // -> farklı karakterleri görmez gelir.
+  });
+  next(); // -> bir sonraki middleware geçer
 });
 
 

@@ -15,14 +15,15 @@ const FurnitureSchema = new Schema({
     type: String,
     required: true,
   },
-  category:{
+  products:{
     type:mongoose.Schema.Types.ObjectId,
-    ref:'Category'
+    ref:'Products'
   },
   slug:{
     type: String,
     unique: true,
   }
+  
 });
 
 FurnitureSchema.pre('save', function (next) {
