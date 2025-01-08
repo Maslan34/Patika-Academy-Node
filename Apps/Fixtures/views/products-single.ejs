@@ -34,20 +34,24 @@
                      <h1> Category: <%= product.furniture.name %></h1>
                      <h1> Description: <%= product.furniture.description %></h1>
 
+                     <% if(gloabalUserSessionId ) {%>
                      <form method="POST" action="/products/<%= product.slug %>?_method=DELETE">
-
+                        <%  if(user.role == "Seller") {%> 
                       <button type="submit">
                               Delete
                         </button>
                      </form>
+                     <% } %>
+
+                    
                      
                      
-
-
+                     
+                     <% if(user.role == "Seller") {%>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                      Update
                    </button>
-                   
+                   <% } %>
                    <div class="modal fade bg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                      <div class="modal-dialog modal-lg " role="document">
                         <div class="modal-content bg-primary">
@@ -94,10 +98,26 @@
                         </div>
                      </div>
                   </div>
-                 
+                 <% if(user.role == "Customer") {%>
+                     <% if (user && user.products && !user.products.includes(product._id))  {%>
+                  <form method="POST" action="/products/<%= product.slug %>/reserve">
+
+                     <button type="submit" class="bg-success">
+                        Reserve
+                       </button>
+                    </form>
+                    <% }else{ %>
+                    <form method="POST" action="/products/<%= product.slug %>/cancel">
+
+                     <button type="submit" class="bg-danger">
+                        Cancel
+                       </button>
+                    </form>
+                    <% } %>
                   </div>
-                
-               
+                <% } %>
+             
+               <% } %>
                </div>
 
 

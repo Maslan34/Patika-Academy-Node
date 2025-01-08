@@ -8,7 +8,8 @@ router.route('/').get(productController.getAllProducts);
 router.route('/:slug').get(productController.getProduct);
 router.route('/:slug').delete(productController.deleteProduct);
 router.route('/:slug').put(productController.updateProduct);
-
+router.route('/:slug/reserve').post(productController.reserveProduct);
+router.route('/:slug/cancel').post(productController.cancelProduct);
 
 
 

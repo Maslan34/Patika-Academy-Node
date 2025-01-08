@@ -21,8 +21,9 @@ const goContactPage = (req, res) => {
   res.render("contact");
 };
 
-const goLoginPage = (req, res) => {
-  res.render("login");
+const goLoginPage = async (req, res) => {
+  const user = await User.findById(gloabalUserSessionId);
+  res.render("login", {user: user});
 };
 
 const goRegisterPage = (req, res) => {

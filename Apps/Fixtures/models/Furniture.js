@@ -15,10 +15,7 @@ const FurnitureSchema = new Schema({
     type: String,
     required: true,
   },
-  products:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:'Products'
-  },
+ 
   slug:{
     type: String,
     unique: true,

@@ -2,14 +2,16 @@ const Product = require("../models/Product");
 const User = require("../models/User");
 const Furniture = require("../models/Furniture");
 
-
 const getAllProducts = async (req, res) => {
   const user = await User.findById(gloabalUserSessionId);
   const furnitures = await Furniture.find();
 
-
   const getAllProducts = await Product.find();
-  res.render("products", { products: getAllProducts ,user:user,furnitures:furnitures});
+  res.render("products", {
+    products: getAllProducts,
+    user: user,
+    furnitures: furnitures,
+  });
 };
 
 const addNewProduct = async (req, res) => {
@@ -21,11 +23,11 @@ const addNewProduct = async (req, res) => {
 
 const getProduct = async (req, res) => {
   const user = await User.findById(gloabalUserSessionId);
-  const productFetched = await Product.findOne({ slug: req.params.slug }).populate("furniture");
-  res.render("products-single", { product: productFetched, user:user });
+  const productFetched = await Product.findOne({
+    slug: req.params.slug,
+  }).populate("furniture");
+  res.render("products-single", { product: productFetched, user: user });
 };
-
-
 
 const deleteProduct = async (req, res) => {
   console.log(req.params.slug);
@@ -39,12 +41,10 @@ const deleteProduct = async (req, res) => {
     //console.log(deletedProduct);
     res.status(200).redirect("/products");
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        error: "An error occurred while deleting the Product",
-        details: error.message,
-      });
+    res.status(500).json({
+      error: "An error occurred while deleting the Product",
+      details: error.message,
+    });
   }
 };
 
@@ -68,13 +68,57 @@ const updateProduct = async (req, res) => {
     // Başarılı bir şekilde güncellenmiş dokümanı döndür
     res.status(200).redirect("/");
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        error: "An error occurred while updating the Product",
-        details: error.message,
-      });
+    res.status(500).json({
+      error: "An error occurred while updating the Product",
+      details: error.message,
+    });
   }
+};
+
+const reserveProduct = async (req, res) => {
+  const productFetched = await Product.findOne({
+    slug: req.params.slug,
+  }).populate("furniture");
+
+  const user = await User.findById(gloabalUserSessionId);
+
+  const updatedUser = await User.findOneAndUpdate(
+    { _id: gloabalUserSessionId },
+    {
+      $push: {
+        products: productFetched._id, //
+      },
+    },
+    { new: true } // Güncellenmiş dökümana erişmek için
+  );
+  res.render("products-single", { product: productFetched, user: user });
+};
+
+const cancelProduct = async (req, res) => {
+  const productFetched = await Product.findOne({
+    slug: req.params.slug,
+  }).populate("furniture");
+  const user = await User.findById(gloabalUserSessionId);
+
+  const updatedUser = await User.findOneAndUpdate(
+    { _id: gloabalUserSessionId },
+    { $pull: { products: productFetched._id } }
+  )
+    .then((result) => {
+      console.log("Element removed:", result);
+    })
+    .catch((err) => {
+      console.error("Error:", err);
+    });
+
+  const furnitures = await Furniture.find();
+
+  const getAllProducts = await Product.find();
+  res.render("products", {
+    products: getAllProducts,
+    user: user,
+    furnitures: furnitures,
+  });
 };
 
 module.exports = {
@@ -82,5 +126,7 @@ module.exports = {
   addNewProduct,
   getProduct,
   deleteProduct,
-  updateProduct
+  updateProduct,
+  reserveProduct,
+  cancelProduct,
 };

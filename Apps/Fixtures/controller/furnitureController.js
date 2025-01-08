@@ -34,11 +34,12 @@ const addNewFurniture = async (req, res) => {
 
 const getFurniture = async (req, res) => {
   try {
+    const user = await User.findById(gloabalUserSessionId);
     const furnitureFetched = await Furniture.findOne({ slug: req.params.slug });
     if (!furnitureFetched) {
       return res.status(404).json({ error: "Furniture not found" });
     }
-    res.render("furnitures-single", { furniture: furnitureFetched });
+    res.render("furnitures-single", { furniture: furnitureFetched ,user:user});
   } catch (error) {
     res
       .status(500)
