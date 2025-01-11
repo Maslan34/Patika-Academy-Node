@@ -1,0 +1,22 @@
+{
+  "name": "freelancer",
+  "version": "1.0.0",
+  "description": "portfolio page for freelancers",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "keywords": [
+    "freelancer",
+    "portfolio",
+    "project"
+  ],
+  "author": "Muharrem Aslan",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9"
+  }
+}
