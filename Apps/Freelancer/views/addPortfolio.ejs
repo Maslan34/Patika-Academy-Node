@@ -1,0 +1,86 @@
+<%- include("./partials/_header")  %>
+    <body id="page-top">
+        <%- include("./partials/_navigation")  %>
+ 
+
+        <!-- Contact Section-->
+        <section class="page-section" id="contact">
+            <div class="container mt-5">
+                <!-- Contact Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Add Portfolio</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Contact Section Form-->
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-xl-7">
+                        <!-- * * * * * * * * * * * * * * *-->
+                        <!-- * * SB Forms Contact Form * *-->
+                        <!-- * * * * * * * * * * * * * * *-->
+                        <!-- This form is pre-integrated with SB Forms.-->
+                        <!-- To make this form functional, sign up at-->
+                        <!-- https://startbootstrap.com/solution/contact-forms-->
+                        <!-- to get an API token!-->
+                        <form method="post" action="/addPortfolio" id="contactForm" enctype="multipart/form-data" >
+                            <!-- Name input-->
+                            <div class="form-floating mb-3">
+                                <input name="name" class="form-control" id="pname" type="text" placeholder="Enter your name..."  />
+                                <label for="name">Project Name</label>
+                              
+                            </div>
+                        
+                            <!-- Message input-->
+                            <div class="form-floating mb-3">
+                                <textarea name="description" class="form-control" id="Description" type="text" placeholder="Enter your description here..." style="height: 10rem" ></textarea>
+                                <label for="message">Description</label>
+             
+                            </div>
+
+                            <!-- Message input-->
+                            <div class="form-floating mb-3">
+                           
+                            
+                                <input type="file" name="photo" id="photo"  data-sb-validations="required" />
+                          
+                            </div>
+                            <!-- Submit success message-->
+                            <!---->
+                            <!-- This is what your users will see when the form-->
+                            <!-- has successfully submitted-->
+                            <div class="d-none" id="submitSuccessMessage">
+                                <div class="text-center mb-3">
+                                    <div class="fw-bolder">Form submission successful!</div>
+                                    To activate this form, sign up at
+                                    <br />
+                                    <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                                </div>
+                            </div>
+                            <!-- Submit error message-->
+                            <!---->
+                            <!-- This is what your users will see when there is-->
+                            <!-- an error submitting the form-->
+                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                            <!-- Submit Button-->
+                            <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <%- include("./partials/_footer")  %>
+    
+       
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>

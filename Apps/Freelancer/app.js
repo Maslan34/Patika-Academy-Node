@@ -2,13 +2,47 @@ const express = require("express");
 const app = express();
 const path = require("path");
 
-app.use(express.static(path.join("public")));
-app.set("view engine", "ejs");
+// 3rd Party npm
+
+  const mongoose = require("mongoose");
+
+// 3rd Party npm
+
+
+// DB Connection
+
+mongoose
+  .connect('mongodb://127.0.0.1:27017/freelancer')
+  .then(() => console.log('DB Connection Successfull'))
+  .catch(() => console.log('DB Connection Failure '));
+// DB Connection
+
+
+const pageRouter = require("./routes/pageRouter");
+
+
+// UTILITY MIDDLEWARES
+
+  app.use(express.static(path.join(__dirname,"public"))); // STATIC FILES
+  app.set("view engine", "ejs");  // VIEW ENGINE
+
+  // GETTING POST DATA
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));  
+
+// UTILITY MIDDLEWARES
+
+
+
 const port = 3000;
 
-app.get("/", (req, res) => {
-  res.render("index");
-});
+
+// ROUTES
+
+app.use("/",pageRouter);
+
+// ROUTES
+
 
 app.listen(port, () => {
   console.log(`The application has started on ${port}.`);
