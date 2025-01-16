@@ -5,6 +5,7 @@ const path = require("path");
 // 3rd Party npm
 
   const mongoose = require("mongoose");
+  const methodOverride = require('method-override')
 
 // 3rd Party npm
 
@@ -19,6 +20,7 @@ mongoose
 
 
 const pageRouter = require("./routes/pageRouter");
+const projectRouter = require("./routes/projectRouter");
 
 
 // UTILITY MIDDLEWARES
@@ -30,6 +32,9 @@ const pageRouter = require("./routes/pageRouter");
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));  
 
+  // METHOD OVERRIDE
+  app.use(methodOverride('_method'))
+
 // UTILITY MIDDLEWARES
 
 
@@ -40,6 +45,7 @@ const port = 3000;
 // ROUTES
 
 app.use("/",pageRouter);
+app.use("/project",projectRouter);
 
 // ROUTES
 

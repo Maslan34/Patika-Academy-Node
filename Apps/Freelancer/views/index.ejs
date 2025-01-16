@@ -5,7 +5,7 @@
         <header class="masthead bg-primary text-white text-center">
             <div class="container d-flex align-items-center flex-column">
                 <!-- Masthead Avatar Image-->
-                <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." />
+                <img class="masthead-avatar mb-5" src="/assets/img/avataaars.svg" alt="..." />
                 <!-- Masthead Heading-->
                 <h1 class="masthead-heading text-uppercase mb-0">Start Bootstrap</h1>
                 <!-- Icon Divider-->
@@ -171,11 +171,27 @@
                                     <img class="img-fluid" src="<%= element.photo == null ? '/assets/img/no_image.png' : element.photo %>" alt="..." />
 
                                     <!-- Portfolio Modal - Text-->
-                                    <p class="mb-4"><%= element.description %> * <%= element.photo %></p>
-                                    <button class="btn btn-primary" data-bs-dismiss="modal">
-                                        <i class="fas fa-xmark fa-fw"></i>
-                                        Close Window
-                                    </button>
+                                    <p class="mb-4"><%= element.description %> </p>
+
+                                    <div style="display: flex; gap: 10px;  justify-content: center;"> 
+                                        <form action="/project/<%= element._id %>?_method=DELETE" method="POST">
+                                            <button class="btn btn-primary" data-bs-dismiss="modal">
+                                                <i class="fas fa-xmark fa-fw"></i>
+                                                Delete
+                                            </button>
+                                        </form>
+                                        <form action="/project/<%= element._id %>?_method=PUT" method="POST">
+                                            <button class="btn btn-primary" data-bs-dismiss="modal">
+                                                <i class="fas fa-pen fa-fw"></i>
+                                                Update
+                                            </button>
+                                        </form>
+                                        <a href="/project/<%=element._id %>" class="btn btn-primary">
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                            Go Project Page
+                                        </a>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
