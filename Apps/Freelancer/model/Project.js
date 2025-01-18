@@ -12,8 +12,13 @@ const ProjectSchmema = new Schema({
   },
   photo: {
     type: String,
+    default: "",
   },
   dateCreated: {
+    type: Date,
+    default: Date.now,
+  },
+  dateUpdated: {
     type: Date,
     default: Date.now,
   },

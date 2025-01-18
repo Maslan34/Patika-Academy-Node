@@ -41,7 +41,7 @@
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
-                            <img class="img-fluid" src="<%= element.photo == null ? '/assets/img/no_image.png' : element.photo %>" alt="..." />
+                            <img class="img-fluid" src="<%= element.photo == "" ? '/assets/img/no_image.png' : element.photo %>" alt="..." />
 
                         </div>
                     </div>
@@ -168,7 +168,7 @@
                                         <div class="divider-custom-line"></div>
                                     </div>
                                     <!-- Portfolio Modal - Image-->
-                                    <img class="img-fluid" src="<%= element.photo == null ? '/assets/img/no_image.png' : element.photo %>" alt="..." />
+                                    <img class="img-fluid" src="<%= element.photo == "" ? '/assets/img/no_image.png' : element.photo %>" alt="..." />
 
                                     <!-- Portfolio Modal - Text-->
                                     <p class="mb-4"><%= element.description %> </p>
@@ -180,12 +180,12 @@
                                                 Delete
                                             </button>
                                         </form>
-                                        <form action="/project/<%= element._id %>?_method=PUT" method="POST">
-                                            <button class="btn btn-primary" data-bs-dismiss="modal">
+                                        <a href="/project/update/<%= element._id %>" >
+                                            <button class="btn btn-primary" >
                                                 <i class="fas fa-pen fa-fw"></i>
                                                 Update
                                             </button>
-                                        </form>
+                                        </a>
                                         <a href="/project/<%=element._id %>" class="btn btn-primary">
                                             <i class="fa-solid fa-arrow-right"></i>
                                             Go Project Page

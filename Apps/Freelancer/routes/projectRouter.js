@@ -30,7 +30,8 @@ const router = express.Router();
 
 
 router.route("/:id").get(projectController.goProjectPage);
-//router.route("/:id").put(projectController.updateProject);
+router.route("/update/:id").get(projectController.goUpdatePage);
+router.route("/:id").put(upload.single("photo"),projectController.updateProject);
 router.route("/:id").delete(projectController.deleteProject);
 router.route("/addPortfolio").post(upload.single("photo"), projectController.addPortfolio);
 

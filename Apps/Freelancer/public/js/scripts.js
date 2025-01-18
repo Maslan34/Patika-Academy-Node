@@ -52,3 +52,16 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
 });
+
+document.getElementById("photo").addEventListener("change", function(event) {
+    const file = event.target.files[0]; // Seçilen dosyayı al
+    console.log(file);
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById("imagePreview").src = e.target.result; // Önizleme resmini güncelle
+            document.getElementById("imagePreviewContainer").style.display = "block"; // Önizlemeyi göster
+        };
+        reader.readAsDataURL(file); // Dosyayı oku ve Base64 formatında çevir
+    }
+});
