@@ -19,8 +19,8 @@
             </div>
         </header>
         <!-- Portfolio Section-->
-        <section class="page-section portfolio" id="portfolio">
-            <div class="container">
+        <section class="page-section portfolio " id="portfolio">
+            <div class="container mb-5">
                 <!-- Portfolio Section Heading-->
                 <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Portfolio</h2>
                 <!-- Icon Divider-->
@@ -49,6 +49,91 @@
                   
                 </div>
             </div>
+
+            <!--Pagination -->
+            
+                <nav aria-label="Page navigation example mt-5">
+                    <ul class="pagination justify-content-center pagination-lg">
+                        <!-- Double Left Arrow (<<) -->
+
+                        <% if(currentPage!= 1) { %> 
+                        <li class="page-item">
+                            <a class="page-link" href="/?page=1" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">First</span>
+                            </a>
+                        </li>
+                        <!-- Sıngle Left Arrow (<) -->
+                        <% let previousPage = currentPage - 1; %>
+                        <li class="page-item">
+                            <a class="page-link" href="/?page=<%=(previousPage)%>" aria-label="Previous">
+                                <span aria-hidden="true">&lsaquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <% } %>
+                        
+                        <% if (currentPage - 2 > 0) { %>
+                            <li class="page-item">
+                              <a class="page-link" href="/?page=<%= currentPage - 2 %>">
+                                <%= currentPage - 2 %>
+                              </a>
+                            </li>
+                            <% } %>
+                            
+                            <% if (currentPage - 1 > 0) { %>
+                            <li class="page-item">
+                              <a class="page-link" href="/?page=<%= currentPage - 1 %>">
+                                <%= currentPage - 1 %>
+                              </a>
+                            </li>
+                            <% } %>
+                            
+                            <li class="page-item active">
+                              <a class="page-link" href="/?page=<%= currentPage %>">
+                                <%= currentPage %>
+                              </a>
+                            </li>
+                            
+                            <% if (currentPage + 1 <= totalPages) { %>
+                            <li class="page-item">
+                              <a class="page-link" href="/?page=<%= currentPage + 1 %>">
+                                <%= currentPage + 1 %>
+                              </a>
+                            </li>
+                            <% } %>
+                            
+                            <% if (currentPage + 2 <= totalPages) { %>
+                            <li class="page-item">
+                              <a class="page-link" href="/?page=<%= currentPage + 2 %>">
+                                <%= currentPage + 2 %>
+                              </a>
+                            </li>
+                            <% } %>
+
+                        <% if(currentPage!=totalPages){ %>
+                        <!-- Single right arrow (>) -->
+                        <% let nextPage = currentPage + 1; %>
+                        <li class="page-item">
+                            <a class="page-link" href="/?page=<%=nextPage%>" aria-label="Next">
+                                <span aria-hidden="true">&rsaquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                        
+            
+                        <!-- Dobule right arrow (>>) -->
+                        <li class="page-item">
+                            <a class="page-link" href="/?page=<%=totalPages%>" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Last</span>
+                            </a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </nav>
+              <!--Pagination -->
+
         </section>
         <!-- About Section-->
         <section class="page-section bg-primary text-white mb-0" id="about">

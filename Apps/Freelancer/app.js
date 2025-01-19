@@ -46,6 +46,9 @@ const port = 3000;
 
 app.use("/",pageRouter);
 app.use("/project",projectRouter);
+app.use("*",(req,res,next) =>{
+  res.render("404");
+})
 
 // ROUTES
 
