@@ -13,6 +13,7 @@ const addPortfolio = async (req, res) => {
     res.redirect("/addPortfolio");
   } catch (e) {
     console.log("Error uploading project: ", e);
+    res.status(500).send("An error occurred while uploading the project.");
   }
 };
 
@@ -22,6 +23,7 @@ const goProjectPage = async (req, res) => {
     res.render("single-project", { project });
   } catch (e) {
     console.log("Error finding project: ", e);
+    res.status(500).send("An error occurred while finding the project.");
   }
 };
 
@@ -29,36 +31,32 @@ const deleteProject = async (req, res) => {
   try {
     const projectDeleted = await Project.findByIdAndDelete(req.params.id);
 
-    if (projectDeleted.photo) {
+    if (projectDeleted && projectDeleted.photo) {
       const photoPath = path.join(
         __dirname,
         "..",
         "public",
         projectDeleted.photo
       );
-      await fs.promises.unlink(photoPath, (err) => {
-        if (err) {
-          console.error("Error deleting photo:", err);
-        } else {
-          console.log("Photo deleted successfully");
-        }
-      });
+      await fs.promises.unlink(photoPath);
+      console.log("Photo deleted successfully");
     }
 
     const projects = await Project.find().sort({ dateCreated: -1 });
     res.render("index", { projects });
   } catch (e) {
-    console.log("Error finding project: ", e);
+    console.log("Error deleting project: ", e);
+    res.status(500).send("An error occurred while deleting the project.");
   }
 };
 
 const goUpdatePage = async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
-
     res.render("update-project", { project });
   } catch (e) {
     console.log("Error finding project: ", e);
+    res.status(500).send("An error occurred while finding the project.");
   }
 };
 
@@ -82,17 +80,9 @@ const updateProject = async (req, res) => {
           "public",
           oldProject.photo
         );
-        console.log(photoPath);
-        await fs.promises.unlink(photoPath, (err) => {
-          if (err) {
-            console.error(
-              "An error occurred while deleting the photo during the update: ",
-              err
-            );
-          } else {
-            console.log("Photo deleted successfully ");
-          }
-        });
+        //console.log(photoPath);
+        await fs.promises.unlink(photoPath);
+        console.log("Photo deleted successfully ");
       }
 
       updatedProject.photo = `/uploads/${updatedFile.filename}`;
@@ -104,7 +94,7 @@ const updateProject = async (req, res) => {
         { new: true }
       );
     } else {
-      // if clinet not uploads  phot
+      // if client does not upload a photo
       updatedProject.dateUpdated = Date.now();
       newProject = await Project.findOneAndUpdate(
         { _id: req.params.id },
@@ -113,12 +103,13 @@ const updateProject = async (req, res) => {
       );
     }
 
-    //console.log(newProject);
-
+    // console.log(newProject);
+    
     const projects = await Project.find().sort({ dateCreated: -1 });
     res.render("index", { projects });
   } catch (e) {
-    console.log("Error finding project: ", e);
+    console.log("Error updating project: ", e);
+    res.status(500).send("An error occurred while updating the project.");
   }
 };
 
