@@ -1,0 +1,20 @@
+{
+  "name": "misfit",
+  "version": "1.0.0",
+  "description": "a website for traning",
+  "main": "app.js",
+  "scripts": {
+    "start" :"nodemon app.js"
+  },
+  "keywords": [
+    "nodejs",
+    "traning",
+    "mongodb"
+  ],
+  "author": "Muharrem Aslan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9"
+  }
+}
