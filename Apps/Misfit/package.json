@@ -4,7 +4,7 @@
   "description": "a website for traning",
   "main": "app.js",
   "scripts": {
-    "start" :"nodemon app.js"
+    "start": "nodemon app.js"
   },
   "keywords": [
     "nodejs",
@@ -14,7 +14,9 @@
   "author": "Muharrem Aslan",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^3.1.10",
     "express": "^4.21.2",
+    "mongoose": "^8.9.5",
     "nodemon": "^3.1.9"
   }
 }
