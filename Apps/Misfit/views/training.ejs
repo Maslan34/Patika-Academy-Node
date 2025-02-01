@@ -24,26 +24,25 @@
                   </div>
                </div>
                <div class="row">
-                  <% trainings.forEach(element => {  %>
-                     
+              
                  
                   <div class="col-md-4">
-                     <a href="/trainings/<%= element.slug %>">
+                    
                   
                      
                      <div id="trai" class="trainer_box">
                         <div class="trainer_img">
-                           <figure><img src="images/tra.jpg" alt="#"/></figure>
+                           <figure><img src="/images/tra.jpg" alt="#"/></figure>
                         </div>
                         <div class="trainer">
-                           <h3> <%= element.name %> </h3>
-                           <p><%= element.description %></p>
+                           <h3> <%= training.name %> </h3>
+                           <p><%= training.description %></p>
                         </div>
                      </div>
-                  </a>
+         
                   </div>
                    
-                  <% }); %>
+                  
                   
                </div>
             </div>
@@ -52,3 +51,4 @@
       </div>
       <!-- end services -->
       <%- include("partials/_footer") %>
+      

@@ -1,7 +1,16 @@
+const path = require("path");
 const express = require("express");
 const app = express();
+const session = require("express-session");
+const MongoStore = require('connect-mongo');
+
+
+// Global Variables
+
 const port = 3000;
-const path = require("path");
+global.userSessionID = null;
+
+// Global Variables
 
 // 3rd Party npm
 
@@ -21,34 +30,55 @@ mongoose
 // Configurations
 
 app.set("view engine", "ejs");
+app.set("trust proxy", 1); // trust first proxy for sessions
 
 // Configurations
 
 // Middlewares
 
-  // Static Files
+// Static Files
 
-  app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public")));
 
-  // Static Files
+// Static Files
 
-  // Body Parser
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
-  // Body Parser
+// Body Parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+// Body Parser
+
+// Session
+
+app.use(
+  session({
+    secret: "Sensei",
+    //resave: false, //deprecated
+    //saveUninitialized: true, //deprecated
+    //cookie: { secure: true }, // deprecated
+    store: MongoStore.create({ mongoUrl: 'mongodb://127.0.0.1:27017/misfit' })
+  })
+);
 
 // Middlewares
 
 // Routes
 
 const pageRoute = require("./routes/pageRoute");
-const traningsRoute = require("./routes/traningsRoute");
+const traningRoute = require("./routes/traningRoute");
+const categoryRoute = require("./routes/categoryRoute");
+const authRoute = require("./routes/authRoute");
 
 // Routes
-
+app.use("*", (req, res,next) => {
+  userSessionID  = req.session.userSession;
+  console.log("gloabal: "+userSessionID);
+  //console.log("session: "+req.session.userSession);
+  next();
+});
 app.use("/", pageRoute);
-app.use("/trainings", traningsRoute);
-
+app.use("/trainings", traningRoute);
+app.use("/categories", categoryRoute);
+app.use("/users", authRoute);
 
 app.listen(port, () => {
   console.log(`Misfit App Listening on Port ${port}`);

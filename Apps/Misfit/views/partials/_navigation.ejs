@@ -8,7 +8,7 @@
                     <div class="full">
                        <div class="center-desk">
                           <div class="logo">
-                             <a href="/"><img src="images/logo.png" alt="#" /></a>
+                             <a href="/"><img src="/images/logo.png" alt="#" /></a>
                           </div>
                        </div>
                     </div>
@@ -38,9 +38,32 @@
                              <li class="nav-item">
                                 <a class="nav-link" href="gallery.html">Gallery</a>
                              </li>
+                             <% if(userSessionID) { %>
+                              
+                              <li class="nav-item">
+                                 <a href="/users/logout">
+                                    <i class="fa-solid fa-arrow-right-to-bracket fa-2x"></i>
+                                 </a>
+                                </li>
+                                <% }else { %>
+                                 
                              <li class="nav-item">
-                                <a class="nav-link" href="contact.html">Contact Us</a>
+                              <a href="/login">
+                                 <i class="fa-solid fa-right-to-bracket fa-2x"></i>
+                              </a>
                              </li>
+                             <li class="ml-3 nav-item">
+                              <a href="/signUp">
+                                 <i class="fa-solid fa-user-plus fa-2x"></i>
+                              </a>
+                             </li>
+                           <%  } %>
+
+                             
+                             
+
+
+                             
                           </ul>
                        </div>
                     </nav>
