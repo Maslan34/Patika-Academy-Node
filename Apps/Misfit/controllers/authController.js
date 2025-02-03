@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const signUp = async (req, res) => {
     try {
        const user = await User.create(req.body);
-       res.redirect("/");
+       res.redirect("/users/dashboard");
       } catch (err) {
         console.log("Error Occured:", err.message);
         res.status(400).render("errors/400", { pageName: "index" });
@@ -24,7 +24,9 @@ const signUp = async (req, res) => {
 
         if (passwordCheck) {
             req.session.userSession=user._id
-            res.send("Login Successful");
+            //res.send("Login successful");
+            res.redirect("/users/dashboard");
+
         } else {
           res.send("Password Failed");
         }

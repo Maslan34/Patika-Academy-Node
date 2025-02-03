@@ -1,0 +1,96 @@
+<%- include("../partials/_header") %>
+<%- include("../partials/_navigation") %>
+      <div class="back_re">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="title">
+                  <h2>Trainer Dashboard</h2>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- services -->
+      <div  class="services">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#trainingModal">
+                        Create New Training
+                      </button>
+                      
+                      
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-4">
+                  <div class="se_img">
+                     <figure><img src="/images/service1.jpg" alt="#"/></figure>
+                  </div>
+               </div>
+               <div class="col-md-4">
+                  <div class="se_img">
+                     <figure><img src="/images/service2.jpg" alt="#"/></figure>
+                  </div>
+               </div>
+               <div class="col-md-4">
+                  <div class="se_img">
+                     <figure><img src="/images/service3.jpg" alt="#"/></figure>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end services -->
+
+      <!-- Modal  -->
+
+      <!-- Bootstrap Modal -->
+<div class="modal fade" id="trainingModal" tabindex="-1" aria-labelledby="trainingModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="trainingModalLabel">Add New Training</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="trainingForm" method="post" action="/trainings" >
+          <div class="mb-3">
+            <label for="name" class="form-label">Training Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select class="form-control" id="category" name="category">
+               <% categories.forEach(element => { %>
+                  <option value="<%= element._id %>"><%= element.name %></option>
+               <% }); %>
+             
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" id="saveTraining">Save</button>
+          </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+      <!-- end Modal  -->
+
+
+      <!--  footer -->
+      <%- include("../partials/_footer") %>
