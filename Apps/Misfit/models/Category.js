@@ -17,6 +17,14 @@ categorySchema.pre("validate", function (next) {
     next();
 });
 
+// The part where the slug is updated again after the category is updated.
+categorySchema.post("findOneAndUpdate", function (doc) {
+  if (doc.name) {
+    doc.slug = slugify(doc.name);
+    doc.save();  
+  }
+});
+
 const Category = mongoose.model("categories", categorySchema);
 
 module.exports = Category;

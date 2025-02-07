@@ -4,8 +4,8 @@ module.exports  = ( roles ) => {
 
     return async (req, res, next) => {
         const user  =  await User.findOne({_id:req.session.userSession});
-        console.log(user.role);
-        console.log(roles)
+        //console.log(user.role);
+        //console.log(roles)
         if(roles.includes(user.role))
             next();
         else

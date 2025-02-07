@@ -23,14 +23,14 @@
                      </div>
                   </div>
                </div>
-               <div class="row">
+               <div class="row justify-content-center">
               
                  
-                  <div class="col-md-4">
+                  <div class="col-md-4 center">
                     
                   
                      
-                     <div id="trai" class="trainer_box">
+                     <div id="trai" class="trainer_box ">
                         <div class="trainer_img">
                            <figure><img src="/images/tra.jpg" alt="#"/></figure>
                         </div>
@@ -38,6 +38,38 @@
                            <h3> <%= training.name %> </h3>
                            <p><%= training.description %></p>
                         </div>
+
+                        <!-- For  Logged Users-->
+                        <% if(userSessionID) { %>
+                     
+                           <div style="display: flex; justify-content: center; gap: 10px;">
+
+                              <% if(user.role === "MEMBER") { %>
+                              <% if(training.members.includes(userSessionID)){ %>
+                             
+                              <form action="/trainings/<%= training.slug %>/cancel" method="post"><button class="trainer-buttons btn btn-danger">Cancel</button></form>
+                              <% } else {%>
+                                 <form action="/trainings/<%= training.slug %>/enroll" method="post"> <button type="submit" class="trainer-buttons btn btn-success">Enroll</button>
+                                 </form>
+                                 <% } %>
+                           </div>
+                           <% } %>
+                           
+                           <!-- For  Not Logged Users-->
+                        <% }else{ %>
+
+                           <div style="display: flex; justify-content: center; gap: 10px;">
+                             
+                             
+                              <form action="/trainings/<%= training.slug %>/enroll" method="post">
+                                 <div data-bs-toggle="tooltip" data-bs-placement="top" 
+                                      title="You must be logged in to enroll ">
+                                    <button type="submit" class="trainer-buttons btn btn-success" disabled>Enroll</button>
+                                 </div>
+                              </form>
+                                 <% } %>
+                           </div>
+                           
                      </div>
          
                   </div>
@@ -50,5 +82,18 @@
          <!-- end trainers -->
       </div>
       <!-- end services -->
+
+
+      <!-- Bootstrap Tooltip'in Çalışması için -->
+      <script>
+         document.addEventListener("DOMContentLoaded", function() {
+             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+             var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                 return new bootstrap.Tooltip(tooltipTriggerEl);
+             });
+      
+             
+         });
+      </script>
       <%- include("partials/_footer") %>
       

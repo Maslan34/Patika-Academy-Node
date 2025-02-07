@@ -1,4 +1,6 @@
 const Training = require("../models/Training");
+const User = require("../models/User");
+const slugify = require("slugify");
 
 const getAllTrainings = async (req, res) => {
   try {
@@ -13,7 +15,7 @@ const getAllTrainings = async (req, res) => {
 
 const createTraining = async (req, res) => {
   try {
-    await Training.create(req.body);
+    await Training.create({...req.body,trainer:userSessionID});
     res.status(201).redirect("/trainings");
   } catch (err) {
     console.log("Error Occured:", err.message);
@@ -23,7 +25,8 @@ const createTraining = async (req, res) => {
 
 const deleteTraining = async (req, res) => {
   try {
-    await Training.findByIdAndDelete(req.params.id);
+ 
+    await Training.findOneAndDelete({slug:req.params.slug});
     res.redirect("/trainings");
   } catch (err) {
     console.log("Error Occured:", err.message);
@@ -33,8 +36,12 @@ const deleteTraining = async (req, res) => {
 
 const updateTraining = async (req, res) => {
   try {
-    const filter = { _id: req.params.id };
-    const update = req.body;
+    const filter = { slug: req.params.slug };
+    const update = { 
+      ...req.body,
+      slug: slugify(req.body.name),
+      dateUpdated: new Date() 
+    };
     const doc = await Training.findOneAndUpdate(filter, update, {
       new: true,
     });
@@ -49,7 +56,15 @@ const getTraining = async (req, res) => {
   try {
   
     const trainingFetched = await Training.findOne({slug:req.params.slug})
-    res.render("training",{training:trainingFetched,pageName:'training'});
+    let user = null;
+    if (userSessionID) {
+      user = await User.findById(userSessionID);
+    }
+    res.render("training", {
+      training: trainingFetched,
+      user: user,
+      pageName: "training",
+    });
 
   } catch (err) {
     console.log("Error Occured:", err.message);
@@ -58,11 +73,55 @@ const getTraining = async (req, res) => {
 };
 
 
-getTraining
+const enrollTraining = async (req, res) => {
+  try {
+  
+    const filter = { slug: req.params.slug };
+
+    const update = { 
+        dateUpdated: new Date(),
+        $push: { members: userSessionID } 
+    };
+    const doc = await Training.findOneAndUpdate(filter, update, {
+      new: true,
+    });
+    res.redirect("/trainings");
+
+  } catch (err) {
+    console.log("Error Occured:", err.message);
+    res.status(400).render("errors/400", { pageName: "index" });
+  }
+};
+
+const cancelTraining = async (req, res) => {
+  try {
+  
+    const filter = { slug: req.params.slug };
+
+    const update = { 
+      dateUpdated: new Date(),
+      $pull: { members: userSessionID } 
+    };
+
+    const doc = await Training.findOneAndUpdate(filter, update, {
+      new: true,
+    });
+    res.redirect("/trainings");
+
+  } catch (err) {
+    console.log("Error Occured:", err.message);
+    res.status(400).render("errors/400", { pageName: "index" });
+  }
+};
+
+
+
 module.exports = {
   getAllTrainings,
   createTraining,
   deleteTraining,
   updateTraining,
-  getTraining
+  getTraining,
+  enrollTraining,
+  cancelTraining
 };

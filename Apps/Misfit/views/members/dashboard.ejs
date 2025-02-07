@@ -1,45 +1,61 @@
 <%- include("../partials/_header") %>
 <%- include("../partials/_navigation") %>
-      <div class="back_re">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="title">
-                  <h2>Member Dashboard</h2>
-                  </div>
-               </div>
+
+<div class="back_re">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="title">
+               <h2>Member Dashboard</h2>
             </div>
          </div>
       </div>
-      <!-- services -->
-      <div  class="services">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="titlepage">
-                     <p>The point of using Lorem Ipsum is that it has a more-or-less </p>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-4">
-                  <div class="se_img">
-                     <figure><img src="images/service1.jpg" alt="#"/></figure>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="se_img">
-                     <figure><img src="images/service2.jpg" alt="#"/></figure>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="se_img">
-                     <figure><img src="images/service3.jpg" alt="#"/></figure>
-                  </div>
-               </div>
+   </div>
+</div>
+
+<!-- services -->
+<div class="services">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="titlepage">
+               <p>The point of using Lorem Ipsum is that it has a more-or-less </p>
             </div>
          </div>
       </div>
-      <!-- end services -->
-      <!--  footer -->
-      <%- include("../partials/_footer") %>
+
+      <!-- Training cards section -->
+      <div class="row">
+         <% trainings.forEach(element => { %>
+            <div class="col-md-4">
+               <div id="trai" class="trainer_box al">
+
+
+                  <a href="/trainings/<%=element.slug %>">
+                     <div id="trai" class="trainer_box" style="color: aliceblue;">
+                        <div class="trainer_img">
+                           <figure><img src="/images/tra.jpg" alt="#"></figure>
+                        </div>
+                        <div class="trainer">
+                           <h3 style="color: chocolate;"> <%= element.name %> </h3>
+                           <p><%= element.description %></p>
+                        </div>
+                     </div>
+                  </a>
+
+                  
+               </div>
+            </div>
+         <% }) %>
+
+         <div style="display: flex; justify-content: center; gap: 10px;">
+            <!-- Optional content can go here if necessary -->
+         </div>
+
+      </div>
+   </div>
+</div>
+<!-- end services -->
+
+<!-- footer -->
+<%- include("../partials/_footer") %>

@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
+const methodOverride = require('method-override')
 
 
 // Global Variables
@@ -47,17 +48,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Body Parser
 
-// Session
+  // Session
 
-app.use(
-  session({
-    secret: "Sensei",
-    //resave: false, //deprecated
-    //saveUninitialized: true, //deprecated
-    //cookie: { secure: true }, // deprecated
-    store: MongoStore.create({ mongoUrl: 'mongodb://127.0.0.1:27017/misfit' })
-  })
-);
+  app.use(
+    session({
+      secret: "Sensei",
+      //resave: false, //deprecated
+      //saveUninitialized: true, //deprecated
+      //cookie: { secure: true }, // deprecated
+      store: MongoStore.create({ mongoUrl: 'mongodb://127.0.0.1:27017/misfit' })
+    })
+  );
+  // Session
+
+  // Method Override - PUT / DELETE REQUESTs
+
+  app.use(methodOverride('_method'))
+
+  // Method Override - PUT / DELETE REQUESTs
 
 // Middlewares
 

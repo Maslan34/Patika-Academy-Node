@@ -17,29 +17,257 @@
             <div class="row">
                <div class="col-md-12">
                   <div class="titlepage">
-                     <p>The point of using Lorem Ipsum is that it has a more-or-less </p>
+                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#categoryModal">
+                        Create New Category
+                     </button>
+                  </div>
+   
+               </div>
+               
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <p>Users List</p>
                   </div>
                </div>
             </div>
             <div class="row">
-               <div class="col-md-4">
-                  <div class="se_img">
-                     <figure><img src="/images/service1.jpg" alt="#"/></figure>
+               
+             
+                
+                <table class="table">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Role</th>
+                      <th scope="col">Created</th>
+                      <th scope="col">Updated</th>
+                      <th scope="col">Delete</th>
+                      <th scope="col">Update</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                     <% users.forEach( (element ,index) => { %>
+                    
+                    <tr>
+                      <th scope="row" class="bg-warning"> <%= (index+1) %></th>
+                      <td class="bg-warning"><%= element.name %></td>
+                      <td class="bg-warning"><%= element.email %></td>
+                      <td class="bg-warning"><%= element.role %></td>
+                      <td class="bg-warning"><%= element.dateCreated %></td>
+                      <td class="bg-warning"><%= element.dateUpdated %></td>
+                     
+                      <td class="bg-warning"> 
+                        
+                        <form action="/users/<%=element._id %>?_method=DELETE" method="POST">
+                           <button class="btn btn-success mx-3"  type="submit">
+
+                              <i class="fa-solid fa-trash fa-2x"></i>
+                     
+                    
+                     </button>
+                  </form>
+               </td>
+                        <td class="bg-warning">
+                           
+                              <button type="submit" class="btn btn-success mx-3" data-bs-toggle="modal" data-bs-target="#adminModalUpdate"
+                                 data-id="<%= element._id %>" data-name="<%= element.name %>" data-email="<%= element.email%>" data-role="<%= element.role %>">
+                                 <i class="fa-solid fa-pen-fancy fa-2x"></i>
+                              </button>
+                        </td>
+                 
+                    
+                    </tr>
+                     <%   }); %>
+                  </tbody>
+                </table>
+
+
+                
+                  <div class="col-md-12">
+                     <div class="titlepage">
+                        <p>Category List</p>
+                     </div>
                   </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="se_img">
-                     <figure><img src="/images/service2.jpg" alt="#"/></figure>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="se_img">
-                     <figure><img src="/images/service3.jpg" alt="#"/></figure>
-                  </div>
-               </div>
+               
+                <table class="table">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Delete</th>
+                      <th scope="col">Update</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                     <% categories.forEach( (element ,index) => { %>
+                    
+                    <tr>
+                      <th scope="row" class="bg-warning"> <%= (index+1) %></th>
+                      <td class="bg-warning"><%= element.name %></td>
+                     
+                      <td class="bg-warning"> 
+                        
+                        <form action="/categories/<%=element.slug %>?_method=DELETE" method="POST">
+                           <button class="btn btn-success mx-3"  type="submit">
+
+                              <i class="fa-solid fa-trash fa-2x"></i>
+                     
+                    
+                     </button>
+                  </form>
+               </td>
+                        <td class="bg-warning">
+                           
+                              <button type="submit" class="btn btn-success mx-3" data-bs-toggle="modal" data-bs-target="#categoryModalUpdate"
+                                 data-slug-category="<%= element.slug %>" data-category="<%= element.name %>">
+                                 <i class="fa-solid fa-pen-fancy fa-2x"></i>
+                              </button>
+                        </td>
+                 
+                    
+                    </tr>
+                     <%   }); %>
+                  </tbody>
+                </table>
+              
             </div>
          </div>
       </div>
+
+
+
+
+
+
+      <!-- Update Modal -->
+<div class="modal fade" id="adminModalUpdate" tabindex="-1" aria-labelledby="adminModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="adminModalLabel">Update User</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+            <form id="adminFormUpdate" method="post" action="">
+               <div class="mb-3">
+                  <label for="nameUpdate" class="form-label">User Name</label>
+                  <input type="text" class="form-control" id="nameUpdate" name="name" required>
+               </div>
+               <div class="mb-3">
+                  <label for="emailUpdate" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="emailUpdate" name="email" required>
+               </div>
+               <div class="mb-3">
+                  <label for="roleUpdate" class="form-label">Role</label>
+                  <select class="form-control" id="roleUpdate" name="role">
+                     <option value="MEMBER">Member</option>
+                     <option value="TRAINER">Trainer</option>
+                 
+                  </select>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<!-- Category Create Modal -->
+<div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="categoryModalLabel">Add New Category</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+            <form id="categoryForm" method="post" action="/categories" >
+               <div class="mb-3">
+                  <label for="name" class="form-label">Category Name</label>
+                  <input type="text" class="form-control" id="name" name="name" required>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary" id="saveTraining">Save</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+
+  <!-- Category Update Modal -->
+  <div class="modal fade" id="categoryModalUpdate" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="adminModalLabel">Update Category</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+            <form id="categoryFormUpdate" method="post" action="">
+               <div class="mb-3">
+                  <label for="nameUpdate" class="form-label">Category Name</label>
+                  <input type="text" class="form-control" id="categoryNameUpdate" name="name" required>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<!-- Script For Filling Form Update Modal -->
+<script>
+
+document.querySelectorAll('[data-bs-target="#adminModalUpdate"]').forEach(button => {
+  button.addEventListener('click', () => {
+    const name = button.getAttribute('data-name');
+    const email = button.getAttribute('data-email');
+    const role = button.getAttribute('data-role');
+    const id = button.getAttribute('data-id');
+
+    document.getElementById('nameUpdate').value = name;
+    document.getElementById('emailUpdate').value = email;
+
+    const roleSelect = document.getElementById('roleUpdate');
+    Array.from(roleSelect.options).forEach(option => {
+      if (option.value === role) {
+        option.selected = true;
+      }
+    });
+
+    // Form action'ı dinamik olarak güncelle
+    document.getElementById('adminFormUpdate').action = `/users/${id}?_method=PUT`;
+  });
+});
+</script>
+
+<!-- Script For Filling Form Category Modal -->
+<script>
+
+   document.querySelectorAll('[data-bs-target="#categoryModalUpdate"]').forEach(button => {
+     button.addEventListener('click', () => {
+       const name = button.getAttribute('data-category');
+       const slug = button.getAttribute('data-slug-category');
+   
+       document.getElementById('categoryNameUpdate').value = name;
+
+       // Form action'ı dinamik olarak güncelle
+       document.getElementById('categoryFormUpdate').action = `/categories/${slug}?_method=PUT`;
+     });
+   });
+   </script>
       <!-- end services -->
       <!--  footer -->
       <%- include("../partials/_footer") %>

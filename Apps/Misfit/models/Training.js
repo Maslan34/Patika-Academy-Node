@@ -18,6 +18,15 @@ const trainingSchema = new mongoose.Schema({
     type:mongoose.Schema.Types.ObjectId,
     ref:"categories",
   },
+  trainer:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"users",
+    default : []
+  },
+  members:{
+    type:[mongoose.Schema.Types.ObjectId],
+    ref:"users",
+  },
   dateCreated: { type: Date, default: Date.now },
   dateUpdated: { type: Date, default: Date.now },
 });

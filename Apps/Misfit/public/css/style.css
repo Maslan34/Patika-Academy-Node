@@ -939,3 +939,11 @@ ul.link_menu li a {
 .margin_0 {
      margin: 0 !important;
 }
+
+#searchModal .modal-dialog {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     min-height: 100vh; /* Modalın tam ekran yüksekliğe sahip olmasını sağlar */
+ }
+ 

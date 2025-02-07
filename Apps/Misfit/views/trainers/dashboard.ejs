@@ -1,96 +1,167 @@
 <%- include("../partials/_header") %>
 <%- include("../partials/_navigation") %>
-      <div class="back_re">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="title">
-                  <h2>Trainer Dashboard</h2>
-                  </div>
-               </div>
+
+<div class="back_re">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="title">
+               <h2>Trainer Dashboard</h2>
             </div>
          </div>
       </div>
-      <!-- services -->
-      <div  class="services">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="titlepage">
-                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#trainingModal">
-                        Create New Training
-                      </button>
-                      
-                      
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-4">
-                  <div class="se_img">
-                     <figure><img src="/images/service1.jpg" alt="#"/></figure>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="se_img">
-                     <figure><img src="/images/service2.jpg" alt="#"/></figure>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="se_img">
-                     <figure><img src="/images/service3.jpg" alt="#"/></figure>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- end services -->
-
-      <!-- Modal  -->
-
-      <!-- Bootstrap Modal -->
-<div class="modal fade" id="trainingModal" tabindex="-1" aria-labelledby="trainingModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="trainingModalLabel">Add New Training</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="trainingForm" method="post" action="/trainings" >
-          <div class="mb-3">
-            <label for="name" class="form-label">Training Name</label>
-            <input type="text" class="form-control" id="name" name="name" required>
-          </div>
-          <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
-          </div>
-          <div class="mb-3">
-            <label for="category" class="form-label">Category</label>
-            <select class="form-control" id="category" name="category">
-               <% categories.forEach(element => { %>
-                  <option value="<%= element._id %>"><%= element.name %></option>
-               <% }); %>
-             
-            </select>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" id="saveTraining">Save</button>
-          </div>
-        </form>
-      </div>
-      
-    </div>
-  </div>
+   </div>
 </div>
 
+<!-- services -->
+<div class="services">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="titlepage">
+               <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#trainingModal">
+                  Create New Training
+               </button>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <% trainings.forEach(element => { %>
+            <div class="col-md-4 bg-info">
+               <a href="/trainings/climbing">
+                  <div id="trai" class="trainer_box" style="color: aliceblue;">
+                     <div class="trainer_img">
+                        <figure><img src="/images/tra.jpg" alt="#"></figure>
+                     </div>
+                     <div class="trainer">
+                        <h3 style="color: chocolate;"> <%= element.name %> </h3>
+                        <p><%= element.description %></p>
+                     </div>
+                  </div>
+               </a>
+               <div class="trainer-buttons p-3 d-flex gap-2 justify-content-center align-items-center" style="margin-top: 10px;">
+                  <a href="/trainings/<%= element.slug %>" class="btn btn-primary">Details</a>
+                  <button type="button" class="btn btn-success mx-3" data-bs-toggle="modal" data-bs-target="#trainingModalUpdate"
+                      data-name="<%= element.name %>" data-description="<%= element.description%>" data-slug="<%= element.slug %>"
+                      data-category="<%= element.category%>" data-id="<%= element._id %>">
+                      Update
+                  </button>
+                  <form action="/trainings/<%= element.slug %>?_method=DELETE" method="post" class="d-inline">
+                      <button type="submit" class="btn btn-danger">Delete</button>
+                  </form>
+              </div>
+            </div>
+         <% }); %>
+      </div>
+   </div>
+</div>
 
+<!-- Create Modal -->
+<div class="modal fade" id="trainingModal" tabindex="-1" aria-labelledby="trainingModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="trainingModalLabel">Add New Training</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+            <form id="trainingForm" method="post" action="/trainings" >
+               <div class="mb-3">
+                  <label for="name" class="form-label">Training Name</label>
+                  <input type="text" class="form-control" id="name" name="name" required>
+               </div>
+               <div class="mb-3">
+                  <label for="description" class="form-label">Description</label>
+                  <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+               </div>
+               <div class="mb-3">
+                  <label for="category" class="form-label">Category</label>
+                  <select class="form-control" id="category" name="category">
+                     <% categories.forEach(element => { %>
+                        <option value="<%= element._id %>"><%= element.name %></option>
+                     <% }); %>
+                  </select>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary" id="saveTraining">Save</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
 
+<!-- Update Modal -->
+<div class="modal fade" id="trainingModalUpdate" tabindex="-1" aria-labelledby="trainingModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="trainingModalLabel">Update Training</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+            <form id="trainingFormUpdate" method="post" action="">
+               <div class="mb-3">
+                  <label for="nameUpdate" class="form-label">Training Name</label>
+                  <input type="text" class="form-control" id="nameUpdate" name="name" required>
+               </div>
+               <div class="mb-3">
+                  <label for="descriptionUpdate" class="form-label">Description</label>
+                  <textarea class="form-control" id="descriptionUpdate" name="description" rows="3" required></textarea>
+               </div>
+               <div class="mb-3">
+                  <label for="categoryUpdate" class="form-label">Category</label>
+                  <select class="form-control" id="categoryUpdate" name="category">
+                     <% categories.forEach(element => { %>
+                        <option value="<%= element._id %>"><%= element.name %></option>
+                     <% }); %>
+                  </select>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary" id="saveTrainingUpdate">Save</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
 
-      <!-- end Modal  -->
+<!-- Script For Filling Form Update Modal -->
+<script>
 
+   document.querySelectorAll('[data-bs-target="#trainingModalUpdate"]').forEach(button => {
+     button.addEventListener('click', (e) => {
 
-      <!--  footer -->
-      <%- include("../partials/_footer") %>
+       const name = e.target.getAttribute('data-name');
+       const description = e.target.getAttribute('data-description');
+       const category = e.target.getAttribute('data-category'); 
+       const id = e.target.getAttribute('data-id');
+       const slug = e.target.getAttribute('data-slug'); 
+       
+
+       document.getElementById('nameUpdate').value = name;
+       document.getElementById('descriptionUpdate').value = description;
+       
+
+       const categorySelect = document.getElementById('categoryUpdate');
+       Array.from(categorySelect.options).forEach(option => {
+         if (option.value === category) {
+           option.selected = true; 
+         }
+       });
+
+  
+       const trainingIdInput = document.createElement('input');
+       trainingIdInput.type = 'hidden';
+       trainingIdInput.name = '_id';
+       trainingIdInput.value = id;
+       document.getElementById('trainingFormUpdate').appendChild(trainingIdInput);
+        // Güncelleme formunun action değerini dinamik olarak ayarla işlemi
+        document.getElementById('trainingFormUpdate').action = `/trainings/${slug}?_method=PUT`;
+     });
+   });
+</script>
+
+<%- include("../partials/_footer") %>
