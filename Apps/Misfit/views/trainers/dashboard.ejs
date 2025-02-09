@@ -18,6 +18,14 @@
    <div class="container">
       <div class="row">
          <div class="col-md-12">
+            <h1 class="titlepage" style="color: white;">
+               
+               Trainings that you have created
+            </h1>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-12">
             <div class="titlepage">
                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#trainingModal">
                   Create New Training
@@ -25,9 +33,10 @@
             </div>
          </div>
       </div>
+     
       <div class="row">
          <% trainings.forEach(element => { %>
-            <div class="col-md-4 bg-info">
+            <div class="col-md-4 bg-info ml-3">
                <a href="/trainings/climbing">
                   <div id="trai" class="trainer_box" style="color: aliceblue;">
                      <div class="trainer_img">

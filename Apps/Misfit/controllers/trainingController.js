@@ -4,7 +4,16 @@ const slugify = require("slugify");
 
 const getAllTrainings = async (req, res) => {
   try {
-    const traningsFetched = await Training.find();
+
+    let filter={};
+
+    if (req.query.q) {
+      filter = { name: { $regex: req.query.q, $options: "i" } }; // Case-insensitive regex
+    }
+
+    console.log(filter);
+    const traningsFetched = await Training.find(filter).populate("trainer");
+    console.log(traningsFetched);
     res.status(200).render("trainings",{trainings:traningsFetched,pageName:'training'});
     
   } catch (err) {
@@ -55,7 +64,7 @@ const updateTraining = async (req, res) => {
 const getTraining = async (req, res) => {
   try {
   
-    const trainingFetched = await Training.findOne({slug:req.params.slug})
+    const trainingFetched = await Training.findOne({slug:req.params.slug}).populate("trainer")
     let user = null;
     if (userSessionID) {
       user = await User.findById(userSessionID);

@@ -74,6 +74,7 @@ app.use(express.urlencoded({ extended: true }));
 const pageRoute = require("./routes/pageRoute");
 const traningRoute = require("./routes/traningRoute");
 const categoryRoute = require("./routes/categoryRoute");
+const trainersRoute = require("./routes/trainersRoute");
 const authRoute = require("./routes/authRoute");
 
 // Routes
@@ -85,6 +86,7 @@ app.use("*", (req, res,next) => {
 });
 app.use("/", pageRoute);
 app.use("/trainings", traningRoute);
+app.use("/trainers", trainersRoute);
 app.use("/categories", categoryRoute);
 app.use("/users", authRoute);
 
