@@ -23,7 +23,13 @@
                   </div>
    
                </div>
-               
+               <% if (success_msg!="") { %>
+                  <div class="alert alert-success col-md-6"><%= success_msg %></div>
+              <% } %>
+              
+              <% if (error_msg!="") { %>
+                  <div class="alert alert-danger col-md-6"><%= error_msg %></div>
+              <% } %>
                <div class="col-md-12">
                   <div class="titlepage">
                      <p>Users List</p>
@@ -65,7 +71,7 @@
 
                               <i class="fa-solid fa-trash fa-2x"></i>
                      
-                    
+         
                      </button>
                   </form>
                </td>
@@ -141,7 +147,7 @@
 
 
 
-      <!-- Update Modal -->
+<!-- Update Modal -->
 <div class="modal fade" id="adminModalUpdate" tabindex="-1" aria-labelledby="adminModalLabel" aria-hidden="true">
    <div class="modal-dialog">
       <div class="modal-content">

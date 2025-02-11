@@ -4,7 +4,8 @@ const app = express();
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
 const methodOverride = require('method-override')
-
+const flash = require('connect-flash');
+ 
 
 // Global Variables
 
@@ -30,7 +31,7 @@ mongoose
 
 // Configurations
 
-app.set("view engine", "ejs");
+app.set("view engine", "ejs");// setting view engine as ejs
 app.set("trust proxy", 1); // trust first proxy for sessions
 
 // Configurations
@@ -60,6 +61,18 @@ app.use(express.urlencoded({ extended: true }));
     })
   );
   // Session
+
+
+  // Flash Messages
+    app.use(flash());
+
+  
+    app.use((req, res, next) => {
+        res.locals.success_msg = req.flash("success");
+        res.locals.error_msg = req.flash("error");
+        next();
+    });
+// Flash Messages
 
   // Method Override - PUT / DELETE REQUESTs
 

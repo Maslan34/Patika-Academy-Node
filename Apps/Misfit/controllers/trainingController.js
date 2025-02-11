@@ -4,14 +4,10 @@ const slugify = require("slugify");
 
 const getAllTrainings = async (req, res) => {
   try {
-
     let filter={};
-
     if (req.query.q) {
       filter = { name: { $regex: req.query.q, $options: "i" } }; // Case-insensitive regex
     }
-
-    console.log(filter);
     const traningsFetched = await Training.find(filter).populate("trainer");
     console.log(traningsFetched);
     res.status(200).render("trainings",{trainings:traningsFetched,pageName:'training'});
@@ -25,7 +21,8 @@ const getAllTrainings = async (req, res) => {
 const createTraining = async (req, res) => {
   try {
     await Training.create({...req.body,trainer:userSessionID});
-    res.status(201).redirect("/trainings");
+    req.flash("success", "Training Created successfully");
+    res.redirect("/users/dashboard");
   } catch (err) {
     console.log("Error Occured:", err.message);
     res.status(400).render("errors/400", { pageName: "index" });
@@ -36,7 +33,8 @@ const deleteTraining = async (req, res) => {
   try {
  
     await Training.findOneAndDelete({slug:req.params.slug});
-    res.redirect("/trainings");
+    req.flash("success", "Training Deleted successfully");
+    res.redirect("/users/dashboard");
   } catch (err) {
     console.log("Error Occured:", err.message);
     res.status(400).render("errors/400", { pageName: "index" });
@@ -54,7 +52,8 @@ const updateTraining = async (req, res) => {
     const doc = await Training.findOneAndUpdate(filter, update, {
       new: true,
     });
-    res.redirect("/trainings");
+    req.flash("success", "Training Updated successfully");
+    res.redirect("/users/dashboard");
   } catch (err) {
     console.log("Error Occured:", err.message);
     res.status(400).render("errors/400", { pageName: "index" });

@@ -18,17 +18,14 @@ const deleteCategory = async (req,res) => {
   try {
 
     const category = await Category.findOneAndDelete({slug:req.params.slug});
-    const usersFetched = await User.find();
-    const categoriesFetched = await Category.find();
-    res.render("admin/dashboard", { pageName: "dashboard",users:usersFetched,categories:categoriesFetched });
-  
+
+    req.flash("success", "Category Deleted successfully");
+    res.redirect("/users/dashboard");
     } catch (err) {
       console.log("Error Occured:", err.message);
       res.status(400).render("errors/400", { pageName: "index" });
     }
-
 }
-
 const updateCategory = async (req,res) => {
   try {
 

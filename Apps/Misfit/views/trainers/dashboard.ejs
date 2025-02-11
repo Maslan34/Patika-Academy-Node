@@ -18,8 +18,7 @@
    <div class="container">
       <div class="row">
          <div class="col-md-12">
-            <h1 class="titlepage" style="color: white;">
-               
+            <h1 class="titlepage" style="color: white;">           
                Trainings that you have created
             </h1>
          </div>
@@ -33,7 +32,13 @@
             </div>
          </div>
       </div>
+      <% if (success_msg!="") { %>
+         <div class="alert alert-success col-md-6"><%= success_msg %></div>
+     <% } %>
      
+     <% if (error_msg!="") { %>
+         <div class="alert alert-danger col-md-6"><%= error_msg %></div>
+     <% } %>
       <div class="row">
          <% trainings.forEach(element => { %>
             <div class="col-md-4 bg-info ml-3">
