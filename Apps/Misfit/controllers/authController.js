@@ -3,10 +3,18 @@ const bcrypt = require('bcrypt');
 const signUp = async (req, res) => {
     try {
        const user = await User.create(req.body);
-       res.redirect("/users/dashboard");
+       return res.status(200).json({ redirect: "/login" });
       } catch (err) {
         console.log("Error Occured:", err.message);
-        res.status(400).render("errors/400", { pageName: "index" });
+        if (err.code === 11000) {
+          // MongoDB Duplicate Key Error (E11000)
+          return res.status(400).json({
+              errors: [{ path: "email", msg: "This email is already registered" }]
+          });}
+          else{
+            res.status(400).render("errors/400", { pageName: "index" });
+          }
+       
       }
   };
 

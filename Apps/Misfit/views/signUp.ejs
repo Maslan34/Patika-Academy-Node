@@ -17,39 +17,75 @@
          <div class="container d-flex justify-content-center align-items-center">
             <div class="row">
                <div class="col-md-12">
-                  <form id="request" class="main_form" method="post" action="/users/signUp">
+                  <form id="request" class="main_form" method="post">
                      <div class="row">
-                       
-                        <div class="col-md-12">
-                           <input class="contactus" placeholder="Name" type="type" name="name"> 
-                        </div>
-                        <div class="col-md-12">
-                           <input class="contactus" placeholder="Email" type="type" name="email"> 
-                        </div>
-                        <div class="col-md-12">
-                           <input class="contactus" placeholder="Password" type="password" name="password"> 
-                        </div>
-                        <div class="col-md-12">
-                           <label for="options">Select A Role Please</label>
-                           <select class="contactus" name="role">
-                               <option value="MEMBER">Member</option>
-                               <option value="TRAINER">Trainer</option>
-            
-                           </select>
-                       </div>
-                    
-                        
-                        <div class="col-md-12">
-                           <button class="send_btn">Sign Up</button>
-                        </div>
+                         <div class="col-md-12">
+                             <input class="contactus" id="name" placeholder="Name" type="text" name="name">
+                             <small class="error-message" id="nameError"></small>
+                         </div>
+                         <div class="col-md-12">
+                             <input class="contactus" id="email" placeholder="Email" type="email" name="email">
+                             <small class="error-message" id="emailError"></small>
+                         </div>
+                         <div class="col-md-12">
+                             <input class="contactus" id="password" placeholder="Password" type="password" name="password">
+                             <small class="error-message" id="passwordError"></small>
+                         </div>
+                         <div class="col-md-12">
+                             <label for="options">Select A Role Please</label>
+                             <select class="contactus" id="role" name="role">
+                                 <option value="MEMBER">Member</option>
+                                 <option value="TRAINER">Trainer</option>
+                             </select>
+                             <small class="error-message" id="roleError"></small>
+                         </div>
+                         <div class="col-md-12">
+                             <button type="submit" class="send_btn">Sign Up</button>
+                         </div>
                      </div>
-                  </form>
+                 </form>
                </div>
                
             </div>
          </div>
       </div>
       <!-- end contact -->
+
+
+
+      <script>
+         document.getElementById("request").addEventListener("submit", async function (event) {
+    event.preventDefault(); 
+
+    const formData = new FormData(this);
+    const formObject = {};
+    formData.forEach((value, key) => formObject[key] = value);
+
+    try {
+        const response = await fetch("/users/signUp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formObject)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          window.location.href = data.redirect; 
+        } else {
+            data.errors.forEach(error => {
+                const errorField = document.getElementById(`${error.path}Error`);
+                if (errorField) {
+                    errorField.innerText = error.msg;
+                    errorField.style.color = "red";
+                }
+            });
+        }
+    } catch (err) {
+        console.error("Error submitting form", err);
+    }
+});
+     </script>
       <!--  footer -->
       <%- include("partials/_footer") %>
 
