@@ -1,58 +1,91 @@
 <%- include("partials/_header") %>
 <%- include("partials/_navigation") %>
-    
-      <div class="back_re">
-         <div class="container">
+
+<div class="back_re">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="title">
+               <h2 class="text-white text-center" style="font-size: 3rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px;">Our All Trainings</h2>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- services -->
+<div class="trainers py-5">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="titlepage text-center">
+               <p class="text-white mb-4" style="font-size: 1.2rem;">Lorem Ipsum available, but the majority have suffered</p>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <!-- Main Content Area -->
+         <div class="col-md-8">
             <div class="row">
-               <div class="col-md-12">
-                  <div class="title">
-                  <h2>Our All Trainings</h2>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- services -->
-          <!-- trainers -->
-          <div  class="trainers">
-            <div class="container">
-               <div class="row">
-                  <div class="col-md-12">
-                     <div class="titlepage">
-                        <p>Lorem Ipsum available, but the majority have suffered </p>
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <% trainings.forEach(element => {  %>
-                     
-                 
-                  <div class="col-md-4">
+               <% trainings.forEach(element => { %>
+                  <div class="col-md-6 mb-4">
                      <a href="/trainings/<%= element.slug %>">
-                  
-                     
-                     <div id="trai" class="trainer_box">
-                        <div class="trainer_img">
-                           <figure><img src="images/tra.jpg" alt="#"/></figure>
+                        <div class="trainer_box card shadow-lg rounded-3" style="transition: all 0.3s ease;">
+                           <div class="trainer_img">
+                              <img src="images/tra.jpg" alt="#" class="card-img-top rounded-3" style="transition: transform 0.3s ease;"/>
+                           </div>
+                           <div class="card-body">
+                              <h5 class="card-title text-dark" style="font-size: 1.5rem;"><%= element.name %></h5>
+                              <p class="card-text" style="font-size: 1rem;"><%= element.description %></p>
+                              <i class="fa-solid fa-person-chalkboard mt-3" style="font-size: 1rem;"> Trainer:</i>
+                              <p class="text-muted" style="font-size: 1rem; display: inline-block;"><%= element.trainer.name %></p>
+                           </div>
                         </div>
-                        <div class="trainer">
-                           <h3> <%= element.name %> </h3>
-                           <p><%= element.description %></p>
-                           <i class="fa-solid fa-person-chalkboard mt-3 ">Trainer:</i>
-                           <p style="display: inline-block;"><%= element.trainer.name %></p>
-                        
-                        </div>
-                       
-                     </div>
-                  </a>
+                     </a>
                   </div>
+               <% }); %>
+            </div>
+         </div>
+
+         <!-- Sidebar Area -->
+         <div class="col-md-4">
+            <div class="sidebar card bg-dark text-white shadow-lg rounded-3" style="transition: all 0.3s ease;">
+               <div class="card-body">
+                  <h4 class="card-title mb-4" style="font-size: 1.5rem; font-weight: bold;">Categories</h4>
+                  <ul class="list-unstyled">
+                     <%categories.forEach(element => { %>
+                        
                    
-                  <% }); %>
-                  
+                     <li><a href="/trainings?category=<%= element.name%>" class="text-white" style="font-size: 1.1rem;"><%= element.name%></a></li>
+              
+                     <%    });  %>
                </div>
             </div>
          </div>
-         <!-- end trainers -->
       </div>
-      <!-- end services -->
-      <%- include("partials/_footer") %>
+   </div>
+</div>
+<!-- end trainers -->
+<!-- end services -->
+
+<%- include("partials/_footer") %>
+
+<!-- Inline Styles for Hover and Transformation Effects -->
+<style>
+   /* Hover Effect for Images */
+   .trainer_img img:hover {
+      transform: scale(1.05);
+   }
+
+   /* Hover Effect for Cards */
+   .trainer_box:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+   }
+
+   /* Sidebar Link Hover Effect */
+   .sidebar ul li a:hover {
+      color: #007bff;
+      text-decoration: underline;
+   }
+</style>

@@ -1,16 +1,23 @@
 const Training = require("../models/Training");
 const User = require("../models/User");
 const slugify = require("slugify");
-
+const Category = require("../models/Category");
 const getAllTrainings = async (req, res) => {
   try {
+    let traningsFetched;
     let filter={};
+    
     if (req.query.q) {
       filter = { name: { $regex: req.query.q, $options: "i" } }; // Case-insensitive regex
     }
-    const traningsFetched = await Training.find(filter).populate("trainer");
-    console.log(traningsFetched);
-    res.status(200).render("trainings",{trainings:traningsFetched,pageName:'training'});
+    if(req.query.category){
+      const category = await Category.findOne({ name: req.query.category})
+      traningsFetched = await Training.find({category:category._id}).populate("trainer");
+    }
+    else
+      traningsFetched = await Training.find(filter).populate("trainer");
+    const categoriesFetched = await Category.find();
+    res.status(200).render("trainings",{trainings:traningsFetched,pageName:'training',categories:categoriesFetched});
     
   } catch (err) {
     console.log("Error Occured:", err.message);
