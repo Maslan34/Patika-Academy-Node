@@ -19,7 +19,7 @@
       <div class="row">
          <div class="col-md-12">
             <div class="titlepage text-center">
-               <p class="text-white mb-4" style="font-size: 1.2rem;">Lorem Ipsum available, but the majority have suffered</p>
+               <p class="text-white mb-4" style="font-size: 1.2rem;"><%= totalTrainings %> Trainings Found </p>
             </div>
          </div>
       </div>
@@ -45,6 +45,93 @@
                   </div>
                <% }); %>
             </div>
+            
+            <% if (totalTrainings > 4) { %>  
+               <nav aria-label="Page navigation example mt-5">
+                  <ul class="pagination justify-content-center pagination-lg">
+               
+                      <% 
+                      let queryParams = ""; 
+                      if (category) queryParams += `&category=${category}`; 
+                      if (q) queryParams += `&q=${q}`;
+                      %>
+               
+                      <% if(currentPage != 1) { %> 
+                      <!-- Double Left Arrow (<<) -->
+                      <li class="page-item">
+                          <a class="page-link" href="/trainings?page=1<%= queryParams %>" aria-label="First">
+                              <span aria-hidden="true">&laquo;</span>
+                          </a>
+                      </li>
+               
+                      <!-- Single Left Arrow (<) -->
+                      <li class="page-item">
+                          <a class="page-link" href="/trainings?page=<%= currentPage - 1 %><%= queryParams %>" aria-label="Previous">
+                              <span aria-hidden="true">&lsaquo;</span>
+                          </a>
+                      </li>
+                      <% } %>
+               
+                      <% if (currentPage - 2 > 0) { %>
+                      <li class="page-item">
+                        <a class="page-link" href="/trainings?page=<%= currentPage - 2 %><%= queryParams %>">
+                          <%= currentPage - 2 %>
+                        </a>
+                      </li>
+                      <% } %>
+               
+                      <% if (currentPage - 1 > 0) { %>
+                      <li class="page-item">
+                        <a class="page-link" href="/trainings?page=<%= currentPage - 1 %><%= queryParams %>">
+                          <%= currentPage - 1 %>
+                        </a>
+                      </li>
+                      <% } %>
+               
+                      <li class="page-item active">
+                        <a class="page-link" href="/trainings?page=<%= currentPage %><%= queryParams %>">
+                          <%= currentPage %>
+                        </a>
+                      </li>
+               
+                      <% if (currentPage + 1 <= totalPages) { %>
+                      <li class="page-item">
+                        <a class="page-link" href="/trainings?page=<%= currentPage + 1 %><%= queryParams %>">
+                          <%= currentPage + 1 %>
+                        </a>
+                      </li>
+                      <% } %>
+               
+                      <% if (currentPage + 2 <= totalPages) { %>
+                      <li class="page-item">
+                        <a class="page-link" href="/trainings?page=<%= currentPage + 2 %><%= queryParams %>">
+                          <%= currentPage + 2 %>
+                        </a>
+                      </li>
+                      <% } %>
+               
+                      <% if (currentPage != totalPages) { %>
+                      <!-- Single Right Arrow (>) -->
+                      <li class="page-item">
+                          <a class="page-link" href="/trainings?page=<%= currentPage + 1 %><%= queryParams %>" aria-label="Next">
+                              <span aria-hidden="true">&rsaquo;</span>
+                          </a>
+                      </li>
+               
+                      <!-- Double Right Arrow (>>) -->
+                      <li class="page-item">
+                          <a class="page-link" href="/trainings?page=<%= totalPages %><%= queryParams %>" aria-label="Last">
+                              <span aria-hidden="true">&raquo;</span>
+                          </a>
+                      </li>
+                      <% } %>
+               
+                  </ul>
+               </nav>
+               <% } %>
+               
+
+
          </div>
 
          <!-- Sidebar Area -->

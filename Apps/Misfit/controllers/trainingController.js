@@ -4,26 +4,77 @@ const slugify = require("slugify");
 const Category = require("../models/Category");
 const getAllTrainings = async (req, res) => {
   try {
-    let traningsFetched;
-    let filter={};
-    
-    if (req.query.q) {
-      filter = { name: { $regex: req.query.q, $options: "i" } }; // Case-insensitive regex
+    let filter = {};
+    let categoryParam = req.query.category || "";
+    let searchQuery = req.query.q || "";
+
+    // Add category filter if exists
+
+    if (categoryParam) {
+      const category = await Category.findOne({ name: categoryParam });
+      if (category) {
+        filter.category = category._id;
+      } else {
+        return res.status(200).render("trainings", {
+          trainings: [],
+          pageName: "training",
+          categories: await Category.find(),
+          currentPage: 1,
+          totalPages: 1,
+          totalTrainings: 0,
+          category: categoryParam, // Sending Category to Template 
+          q: searchQuery, //Send search query to template
+
+   
+        });
+      }
     }
-    if(req.query.category){
-      const category = await Category.findOne({ name: req.query.category})
-      traningsFetched = await Training.find({category:category._id}).populate("trainer");
+
+    // Add search filter if exists
+    if (searchQuery) {
+      filter.name = { $regex: searchQuery, $options: "i" };
     }
-    else
-      traningsFetched = await Training.find(filter).populate("trainer");
+
+    // Find the total number of trainings that fit the filter
+
+    const totalTrainings = await Training.countDocuments(filter);
+    const trainingPerPage = 4;
+    const totalPages = Math.max(1, Math.ceil(totalTrainings / trainingPerPage));
+    let currentPage = Number(req.query.page) || 1;
+
+    // If an invalid page , redirect to page 1.
+
+    if (currentPage > totalPages || currentPage < 1) {
+      currentPage = 1;
+    }
+
+    const offset = trainingPerPage * (currentPage - 1);
+
+
+    const trainings = await Training.find(filter)
+      .populate("trainer")
+      .sort({ dateCreated: -1 })
+      .limit(trainingPerPage)
+      .skip(offset);
+
     const categoriesFetched = await Category.find();
-    res.status(200).render("trainings",{trainings:traningsFetched,pageName:'training',categories:categoriesFetched});
-    
+
+    res.status(200).render("trainings", {
+      trainings,
+      pageName: "training",
+      categories: categoriesFetched,
+      currentPage,
+      totalPages,
+      totalTrainings,
+      category: categoryParam, 
+      q: searchQuery, 
+    });
   } catch (err) {
-    console.log("Error Occured:", err.message);
+    console.log("Error Occurred:", err.message);
     res.status(400).render("errors/400", { pageName: "index" });
   }
 };
+
 
 const createTraining = async (req, res) => {
   try {
